@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Propman</string>
+    <string name="action_sign_in">Sign in or register</string>
+</resources>
