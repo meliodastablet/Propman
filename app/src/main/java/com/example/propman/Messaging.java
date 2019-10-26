@@ -1,4 +1,4 @@
-package com.example.propman;
+package  com.example.propman;
 
 
 import android.os.Bundle;
@@ -43,8 +43,8 @@ public class Messaging extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://propman-66793.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-        reference2 = new Firebase("https://propman-66793.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
+        reference1 = new Firebase("https://propman-de374.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
+        reference2 = new Firebase("https://propman-de374.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,6 @@ public class Messaging extends AppCompatActivity {
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
-
                     reference2.push().setValue(map);
                     messageArea.setText("");
 

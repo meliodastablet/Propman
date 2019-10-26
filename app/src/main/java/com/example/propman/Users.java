@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,9 +32,11 @@ public class Users extends AppCompatActivity {
     ListView uList;
     TextView noUser;
     ArrayList<String> al = new ArrayList<>();
+    ArrayList<String> a2 = new ArrayList<>();
     int totalUsers = 0;
-
-
+    private DatabaseReference mDatabase;
+    private DatabaseReference userref;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,10 @@ public class Users extends AppCompatActivity {
 
         uList = findViewById(R.id.usersList);
         noUser = findViewById(R.id.noUsersText);
+        mAuth = FirebaseAuth.getInstance();
 
 
-
-        String url = "https://propman-66793.firebaseio.com/users.json";
+        String url = "https://propman-de374.firebaseio.com/userlist.json";
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
             @Override
@@ -63,8 +67,13 @@ public class Users extends AppCompatActivity {
         uList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith = al.get(position);
-                startActivity(new Intent(Users.this, Messaging.class));
+                UserDetails.uid = a2.get(position);
+                UserDetails.chatWith = a2.get(position);
+                Intent i = new Intent(Users.this,Show_profile.class);
+                i.putExtra("uid", UserDetails.uid);
+                startActivity(i);
+
+
             }
         });
     }
@@ -76,11 +85,16 @@ public class Users extends AppCompatActivity {
             Iterator i = obj.keys();
             String key = "";
 
+
             while(i.hasNext()){
                 key = i.next().toString();
+                String name = obj.getJSONObject(key).getString("name");
+
+
 
                 if(!key.equals(UserDetails.username)) {
-                    al.add(key);
+                    al.add(name);
+                    a2.add(key);
                 }
 
                 totalUsers++;

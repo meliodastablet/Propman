@@ -1,19 +1,23 @@
-package com.example.propman;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+package  com.example.propman;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.security.spec.ECField;
+
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-
+        Firebase.setAndroidContext(this);
         findViewById(R.id.createAccount).setOnClickListener(this);
         findViewById(R.id.signIn).setOnClickListener(this);
         findViewById(R.id.signOut).setOnClickListener(this);
@@ -48,17 +52,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void updateUI(FirebaseUser user) {
 
         if (user != null) {
-            //user is signed in
+            //currently there is a user
 
         }else{
-            //user is not signed in
+            //no users logged in
 
         }
     }
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, final String password) {
 
-
+        final String email2 = email;
         if (!validateForm()) {
             return;
         }
@@ -70,18 +74,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
 
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Firebase reference = new Firebase("https://propman-de374.firebaseio.com/userlist");
+                            reference.child(user.getUid()).child("password").setValue(password);
+                            reference.child(user.getUid()).child("name").setValue("");
+                            reference.child(user.getUid()).child("surname").setValue("");
+                            reference.child(user.getUid()).child("phone").setValue("");
+                            reference.child(user.getUid()).child("address").setValue("");
+                            reference.child(user.getUid()).child("bdate").setValue("");
+                            reference.child(user.getUid()).child("uid").setValue(user.getUid());
+
                             Toast.makeText(LoginActivity.this, "Account created, you can now sign in",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(user);
-                        } else {
+                                Toast.LENGTH_SHORT).show();
+                        updateUI(user);
+                    } else
 
-                            Toast.makeText(LoginActivity.this, "Account creation failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                    {
 
-
+                        Toast.makeText(LoginActivity.this, "Account creation failed.",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
+                }
+
                 });
 
 
@@ -122,7 +136,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void signIn(String email, String password) {
-
+        final String email2 = email;
+        final String pass2 = password;
         if (!validateForm()) {
             return;
         }
@@ -133,8 +148,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             FirebaseUser user = mAuth.getCurrentUser();
+                            UserDetails.username = user.getUid();
+                            UserDetails.password = pass2;
+
                             Toast.makeText(LoginActivity.this,
                                     "Successfully signed in",
                                     Toast.LENGTH_SHORT).show();
@@ -151,8 +168,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             findViewById(R.id.createAccount).setVisibility(View.GONE);
                             findViewById(R.id.email).setVisibility(View.GONE);
                             findViewById(R.id.password).setVisibility(View.GONE);
-                            findViewById(R.id.textView).setVisibility(View.VISIBLE);
-                            updateUI(user);
+
+
+                            Intent intent = new Intent(getApplicationContext(), Edit_profile.class);
+                            startActivity(intent);
                         } else {
 
 
@@ -182,7 +201,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.forgetPassword).setVisibility(View.VISIBLE);
         findViewById(R.id.verifyEmail).setVisibility(View.GONE);
         findViewById(R.id.createAccount).setVisibility(View.VISIBLE);
-        findViewById(R.id.textView).setVisibility(View.GONE);
         findViewById(R.id.email).setVisibility(View.VISIBLE);
         findViewById(R.id.password).setVisibility(View.VISIBLE);
         updateUI(null);
@@ -302,5 +320,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         return password.length() > 7;
     }
+
+
 
 }
