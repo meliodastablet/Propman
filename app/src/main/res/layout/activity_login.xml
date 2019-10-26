@@ -11,23 +11,14 @@
     android:paddingBottom="16dp"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15pt"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="Profile/Main Page will be here soon."
-        android:visibility="gone"/>
-
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Enter your email address..."/>
+        android:hint="Enter your email address..."
+        android:includeFontPadding="false"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password"
@@ -48,8 +39,9 @@
         android:id="@+id/signIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:text="Sign In" />
+        android:text="SIGN IN"
+        android:textAllCaps="false"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/signOut"
@@ -62,8 +54,8 @@
         android:id="@+id/verifyEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Verify your Email" />
+        android:text="Verify your Email"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/forgetPassword"
