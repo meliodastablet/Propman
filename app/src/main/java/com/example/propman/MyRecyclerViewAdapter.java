@@ -1,14 +1,16 @@
-package com.example.senior1;
+package com.example.propman;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewH
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = property.getId()+property.getTitle()+"\n"+property.getPrice()+property.getOdasalon()+property.getM2()+property.getDescription() + property.getAddress() + property.getImage();
+                String msg = property.getTitle()+"\n"+property.getPrice()+property.getRooms()+property.getarea()+property.getDescription() + property.getAddress() ;
                 ParcelableProperty parcelableProperty = new ParcelableProperty(property);
                 Intent mIntent = new Intent(context.getApplicationContext(), ViewProperty.class);
                 mIntent.putExtra("property", parcelableProperty);

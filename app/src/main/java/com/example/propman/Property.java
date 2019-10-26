@@ -1,35 +1,33 @@
-package com.example.senior1;
+package com.example.propman;
+
+import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class Property {
-    private int id;
     private String title;
     private String price;
-    private String odasalon;
-    private int m2;
+    private String rooms;
+    private String area;
     private String description;
     private String address;
-    private String image;
+    private String uid;
+    private String uniqueproperty;
+    private String filepath;
+   // private Bitmap image;
 
-    public Property(int id, String title, String price, String odasalon, int m2, String description, String address, String image) {
-        this.id = id;
+    public Property( String title, String price, String rooms, String area, String description, String address,String uid,String filepath,String uniqueproperty) {
         this.title = title;
         this.price = price;
-        this.odasalon = odasalon;
-        this.m2 = m2;
+        this.rooms = rooms;
+        this.area = area;
         this.description = description;
         this.address = address;
-        this.image = image;
+        this.uid=uid;
+        this.uniqueproperty=uniqueproperty;
+        this.filepath=filepath;
     }
 
     public Property() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -48,20 +46,20 @@ public class Property {
         this.price = price;
     }
 
-    public String getOdasalon() {
-        return odasalon;
+    public String getRooms() {
+        return rooms;
     }
 
-    public void setOdasalon(String odasalon) {
-        this.odasalon = odasalon;
+    public void setRooms(String rooms) {
+        this.rooms = rooms;
     }
 
-    public int getM2() {
-        return m2;
+    public String getarea() {
+        return area;
     }
 
-    public void setM2(int m2) {
-        this.m2 = m2;
+    public void setarea(String area) {
+        this.area = area;
     }
 
     public String getDescription() {
@@ -80,11 +78,27 @@ public class Property {
         this.address = address;
     }
 
-    public String getImage() {
-        return image;
+    public String getUid() {
+        return uid;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public String getUniqueproperty() {
+        return uniqueproperty;
+    }
+
+    public void setUniqueproperty(String uniqueproperty) {
+        this.uniqueproperty = uniqueproperty;
     }
 }

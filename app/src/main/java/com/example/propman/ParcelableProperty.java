@@ -1,5 +1,4 @@
-package com.example.senior1;
-
+package com.example.propman;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,16 +19,14 @@ public class ParcelableProperty implements Parcelable {
     // This function reads from the parcel and it is used by CREATOR
     public ParcelableProperty(Parcel parcel) {
         property = new Property();
-        property.setId(parcel.readInt());
         property.setTitle(parcel.readString());
         property.setPrice(parcel.readString());
-        property.setOdasalon(parcel.readString());
-        property.setM2(parcel.readInt());
+        property.setRooms(parcel.readString());
+        property.setarea(parcel.readString());
         property.setDescription(parcel.readString());
         property.setAddress(parcel.readString());
-        property.setImage(parcel.readString());
-
-
+        property.setFilepath(parcel.readString());
+        property.setUniqueproperty(parcel.readString());
 
     }
 
@@ -48,14 +45,16 @@ public class ParcelableProperty implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(property.getId());
         parcel.writeString(property.getTitle());
         parcel.writeString(property.getPrice());
-        parcel.writeString(property.getOdasalon());
-        parcel.writeInt(property.getM2());
+        parcel.writeString(property.getRooms());
+        parcel.writeString(property.getarea());
         parcel.writeString(property.getDescription());
         parcel.writeString(property.getAddress());
-        parcel.writeString(property.getImage());
+        parcel.writeString(property.getFilepath());
+        parcel.writeString(property.getUniqueproperty());
+
+
 
     }
 
