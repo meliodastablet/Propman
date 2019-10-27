@@ -88,7 +88,7 @@ public class ViewProperty extends LoginActivity {
 
         if (v.getId() == R.id.delete) {
             propertydatabase.child("propertylist").child(uid).child(property.getUniqueproperty()).removeValue();
-            Intent intent = new Intent(getApplicationContext(), Addproperty.class);
+            Intent intent = new Intent(getApplicationContext(), AddProperty.class);
             startActivity(intent);
         }
     }

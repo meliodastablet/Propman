@@ -1,13 +1,11 @@
 package com.example.propman;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,7 +93,7 @@ public class Show_profile extends LoginActivity {
             signout();
         }
         else if(v.getId() == R.id.sendmessage){
-            Intent intent = new Intent(getApplicationContext(),Chat.class);
+            Intent intent = new Intent(getApplicationContext(), Messaging.class);
             startActivity(intent);         }
 
        /* else if(v.getId() == R.id.showproperties){
