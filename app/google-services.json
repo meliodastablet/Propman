@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "771311866683",
-    "firebase_url": "https://propman-66793.firebaseio.com",
-    "project_id": "propman-66793",
-    "storage_bucket": "propman-66793.appspot.com"
+    "project_number": "73360099806",
+    "firebase_url": "https://propman-de374.firebaseio.com",
+    "project_id": "propman-de374",
+    "storage_bucket": "propman-de374.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:771311866683:android:dfd851f3e08bda06abdd1e",
+        "mobilesdk_app_id": "1:73360099806:android:3ab73e348291f10f60f54f",
         "android_client_info": {
           "package_name": "com.example.propman"
         }
       },
       "oauth_client": [
         {
-          "client_id": "771311866683-rsskb1lgc4hbhj6v7apse735g3agr0ra.apps.googleusercontent.com",
+          "client_id": "73360099806-kd0upd32ocnj9rnpqtq4c4mf8s7r7180.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQO1mcttNt0t2sXDjuAybyP0K3w52y2A4"
+          "current_key": "AIzaSyD2Q_arqHQ2z5VSEAy5wZ0MYPG8oOb9B4s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "771311866683-rsskb1lgc4hbhj6v7apse735g3agr0ra.apps.googleusercontent.com",
+              "client_id": "73360099806-kd0upd32ocnj9rnpqtq4c4mf8s7r7180.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
