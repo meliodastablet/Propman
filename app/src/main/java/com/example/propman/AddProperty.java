@@ -51,7 +51,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.);
+        setContentView(R.layout.activity_addproperty);
         uid=user.getUid();
         context = this.context;
         final FirebaseUser user = mAuth.getCurrentUser();
