@@ -251,7 +251,7 @@ public class Edit_profile extends LoginActivity {
             sendEmailVerification();
         }
          else if(v.getId() == R.id.addproperty){
-             Intent intent = new Intent(getApplicationContext(), Addproperty.class);
+             Intent intent = new Intent(getApplicationContext(), AddProperty.class);
              startActivity(intent);         }
          else if(v.getId() == R.id.save){
              FirebaseUser user = mAuth.getCurrentUser();
