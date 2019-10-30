@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,12 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Show_profile"></activity>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".EditProperty" />
+        <activity android:name=".Show_profile" />
         <activity android:name=".ViewProperty" />
         <activity android:name=".AddProperty" />
         <activity android:name=".Edit_profile" />
         <activity android:name=".Messaging" />
+        <activity android:name=".DisplayProperties" />
         <activity android:name=".Users" />
+        <activity android:name="MyFirebaseMessagingService"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
     </application>
 
 </manifest>
