@@ -68,4 +68,10 @@
         android:layout_marginBottom="0px"
         android:text="SEND MESSAGE" />
 
+    <Button
+        android:id="@+id/showprop2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show all properties" />
+
 </LinearLayout>
