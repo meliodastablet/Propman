@@ -4,11 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,85 +26,70 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class AddProperty extends AppCompatActivity implements View.OnClickListener {
-    boolean flag = false;
+public class EditProperty extends AppCompatActivity implements View.OnClickListener{
+
     private DatabaseReference propertydatabase;
     private DatabaseReference uniqueproperty;
+    private DatabaseReference propref;
     FirebaseStorage storage;
     StorageReference storageReference;
-    private EditText inputtitle;
-    private EditText inputprice;
-    private EditText inputrooms;
-    private EditText inputarea;
-    private EditText inputaddress;
-    private EditText inputdescription;
-    private Button addimage;
-    private Button addproperty;
-    private Uri filePath;
-    private String uid;
-    Context context;
     Property viewproperty;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
+    boolean flag = false;
+    private Uri filePath;
+    private String uid;
+    private EditText inputtitle2;
+    private EditText inputprice2;
+    private EditText inputrooms2;
+    private EditText inputarea2;
+    private EditText inputaddress2;
+    private EditText inputdescription2;
+    private Button addimage2;
+    private Button addproperty2;
+    String puid;
     private final int PICK_IMAGE_REQUEST = 71;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addproperty);
+        setContentView(R.layout.activity_edit_property);
         mAuth = FirebaseAuth.getInstance();
         propertydatabase = FirebaseDatabase.getInstance().getReference();
         uid=user.getUid();
-        context = this.context;
+        Intent intent = getIntent();
+
+         puid = intent.getExtras().getString("puid");
         final FirebaseUser user = mAuth.getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        inputtitle = (EditText) findViewById(R.id.propertytitle);
-        inputprice = (EditText) findViewById(R.id.price);
-        inputrooms = (EditText) findViewById(R.id.rooms);
-        inputaddress = (EditText) findViewById(R.id.address);
-        inputdescription = (EditText) findViewById(R.id.description);
-        inputarea = (EditText) findViewById(R.id.area);
+        inputtitle2 = (EditText) findViewById(R.id.propertytitle2);
+        inputprice2 = (EditText) findViewById(R.id.price2);
+        inputrooms2 = (EditText) findViewById(R.id.rooms2);
+        inputaddress2 = (EditText) findViewById(R.id.address2);
+        inputdescription2 = (EditText) findViewById(R.id.description2);
+        inputarea2 = (EditText) findViewById(R.id.area2);
 
-        findViewById(R.id.addproperty).setOnClickListener(this);
-        findViewById(R.id.addimage).setOnClickListener(this);
+        findViewById(R.id.addproperty2).setOnClickListener(this);
+        findViewById(R.id.addimage2).setOnClickListener(this);
+        propref = propertydatabase.child("propertylist");
+        propref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    inputtitle2.setText( dataSnapshot.child(uid).child(puid).child("title").getValue(String.class));
+                    inputaddress2.setText(dataSnapshot.child(uid).child(puid).child("address").getValue(String.class));
+                    inputarea2.setText(dataSnapshot.child(uid).child(puid).child("area").getValue(String.class));
+                    inputdescription2.setText(dataSnapshot.child(uid).child(puid).child("description").getValue(String.class));
+                    inputprice2.setText(dataSnapshot.child(uid).child(puid).child("price").getValue(String.class));
+                    inputrooms2.setText(dataSnapshot.child(uid).child(puid).child("rooms").getValue(String.class));
 
-
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
-
-        if (v.getId() == R.id.addproperty) {
-            if(flag){
-                try {
-                    returnproperty();
-                }catch (Exception e){
-                    Toast.makeText(AddProperty.this, "Choose an image to add first.",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-            }else{
-                Toast.makeText(AddProperty.this, "Choose an image to add first.",
-                        Toast.LENGTH_SHORT).show();
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                               }
-
-
-        else if (v.getId() == R.id.addimage) {
-            chooseImage();
-            flag = true;
-
-        }
-
-
+            }
+        });
     }
     private void chooseImage() {
         Intent intent = new Intent();
@@ -138,11 +121,10 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            viewproperty.setUid(user.getUid());
                             progressDialog.dismiss();
-                            Toast.makeText(AddProperty.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProperty.this, "Uploaded", Toast.LENGTH_SHORT).show();
                             ParcelableProperty parcelableProperty = new ParcelableProperty(viewproperty);
-                            Intent mIntent = new Intent(AddProperty.this, ViewProperty.class);
+                            Intent mIntent = new Intent(EditProperty.this, ViewProperty.class);
 
                             mIntent.putExtra("property", parcelableProperty);
                             startActivity(mIntent);
@@ -153,7 +135,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(AddProperty.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProperty.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -169,17 +151,14 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         }
     }
     private Property returnproperty(){
-        if(!validateForm()){
-            return null;
-        }
-        String title=inputtitle.getText().toString();
-        String price=inputprice.getText().toString();
-        String rooms=inputrooms.getText().toString();
-        String address=inputaddress.getText().toString();
-        String description=inputdescription.getText().toString();
-        String area=inputarea.getText().toString();
-        uniqueproperty = propertydatabase.child("propertylist").child(user.getUid()).push();
-        String uniquepropertyid=uniqueproperty.getKey();
+        StorageReference storageRef = storage.getReference();
+        String title=inputtitle2.getText().toString();
+        String price=inputprice2.getText().toString();
+        String rooms=inputrooms2.getText().toString();
+        String address=inputaddress2.getText().toString();
+        String description=inputdescription2.getText().toString();
+        String area=inputarea2.getText().toString();
+        uniqueproperty = propertydatabase.child("propertylist").child(user.getUid()).child(puid);
         uniqueproperty.child("title").setValue(title);
         uniqueproperty.child("price").setValue(price);
         uniqueproperty.child("rooms").setValue(rooms);
@@ -187,57 +166,38 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         uniqueproperty.child("description").setValue(description);
         uniqueproperty.child("area").setValue(area);
         uniqueproperty.child("uid").setValue(user.getUid());
-        uniqueproperty.child("rvalue").setValue(0);
-        uniqueproperty.child("ruid").setValue("X");
-        uniqueproperty.child("queue").setValue(0);
-        uniqueproperty.child("imagefilepath").setValue(filePath.toString());
-        uniqueproperty.child("uniquepropertyid").setValue(uniquepropertyid);
 
-        uploadImage(uniquepropertyid);
-        viewproperty=new Property(title,price,rooms,address,description,area,user.getUid(),filePath.toString(),uniquepropertyid);
+        viewproperty=new Property(title,price,rooms,address,description,area,uid,filePath.toString(),puid);
+
+
+        uploadImage(puid);
+
         return viewproperty;
     }
+    @Override
+    public void onClick(View view) {
 
-    private boolean validateForm(){
+        if (view.getId() == R.id.addproperty2) {
+            if(flag){
+                try {
+                    returnproperty();
+                }catch (Exception e){
+                    Toast.makeText(EditProperty.this, "Choose an image to add first.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(EditProperty.this, "Select an image to add first.",
+                        Toast.LENGTH_SHORT).show();
+            }
 
-        boolean valid = true;
-        inputtitle.setError(null);
-        inputprice.setError(null);
-        inputrooms.setError(null);
-        inputaddress.setError(null);
-        inputdescription.setError(null);
-        inputarea.setError(null);
 
-
-
-
-        if(TextUtils.isEmpty(inputtitle.getText().toString())){
-            inputtitle.setError("This field is required.");
-            valid = false;
-
-        }else if(TextUtils.isEmpty(inputprice.getText().toString())){
-            inputprice.setError("This field is required.");
-            valid = false;
-        }
-        else if (TextUtils.isEmpty(inputrooms.getText().toString())) {
-            inputrooms.setError("This field is required.");
-            valid = false;
-        } else if(TextUtils.isEmpty(inputaddress.getText().toString())){
-            inputaddress.setError("This field is required.");
-            valid = false;
-        }
-        else if(TextUtils.isEmpty(inputdescription.getText().toString())){
-            inputdescription.setError("This field is required.");
-            valid = false;
-        }
-        else if(TextUtils.isEmpty(inputarea.getText().toString())){
-            inputrooms.setError("This field is required.");
-            valid = false;
         }
 
 
-        return valid;
+        else if (view.getId() == R.id.addimage2) {
+            chooseImage();
+            flag = true;
+
+        }
     }
 }
-
-

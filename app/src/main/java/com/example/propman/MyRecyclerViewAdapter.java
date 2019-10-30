@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class
-MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context context;
     ArrayList<Property> data;
@@ -40,10 +39,11 @@ MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewH
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = property.getTitle()+"\n"+property.getPrice()+property.getRooms()+property.getarea()+property.getDescription() + property.getAddress() ;
                 ParcelableProperty parcelableProperty = new ParcelableProperty(property);
                 Intent mIntent = new Intent(context.getApplicationContext(), ViewProperty.class);
                 mIntent.putExtra("property", parcelableProperty);
+                System.out.println("R uid" + property.getUid());
+                mIntent.putExtra("uid",property.getUid());
                 context.startActivity(mIntent);
             }
         });

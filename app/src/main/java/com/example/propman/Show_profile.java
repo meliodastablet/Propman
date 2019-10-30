@@ -77,6 +77,7 @@ public class Show_profile extends LoginActivity {
         address=(TextView) findViewById(R.id.address);
         findViewById(R.id.signout).setOnClickListener(this);
         findViewById(R.id.sendmessage).setOnClickListener(this);
+        findViewById(R.id.showprop2).setOnClickListener(this);
        // findViewById(R.id.showproperties).setOnClickListener(this);
         //findViewById(R.id.showusers).setOnClickListener(this);
 
@@ -96,11 +97,11 @@ public class Show_profile extends LoginActivity {
             Intent intent = new Intent(getApplicationContext(), Messaging.class);
             startActivity(intent);         }
 
-       /* else if(v.getId() == R.id.showproperties){
-            Intent i = new Intent(Show_profile.this,ViewProperty.class);
+        else if(v.getId() == R.id.showprop2){
+            Intent i = new Intent(Show_profile.this, DisplayProperties.class);
             i.putExtra("uid", uid4sp);
             startActivity(i);
-        }*/
+        }
 
        /* else if(v.getId() == R.id.showusers){
             Intent intent = new Intent(getApplicationContext(), Users.class);

@@ -93,8 +93,11 @@ public class Users extends AppCompatActivity {
 
 
                 if(!key.equals(UserDetails.username)) {
-                    al.add(name);
-                    a2.add(key);
+                    if(!name.equals("")){
+                        al.add(name);
+                        a2.add(key);
+                    }
+
                 }
 
                 totalUsers++;

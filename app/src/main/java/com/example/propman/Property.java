@@ -1,8 +1,5 @@
 package com.example.propman;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-
 public class Property {
     private String title;
     private String price;
@@ -11,11 +8,10 @@ public class Property {
     private String description;
     private String address;
     private String uid;
-    private String uniqueproperty;
-    private String filepath;
-   // private Bitmap image;
+    private String uniquepropertyid;
+    private String imagefilepath;
 
-    public Property( String title, String price, String rooms, String area, String description, String address,String uid,String filepath,String uniqueproperty) {
+    public Property( String title, String price, String rooms, String area, String description, String address,String uid,String filepath,String uniquepropertyid) {
         this.title = title;
         this.price = price;
         this.rooms = rooms;
@@ -23,8 +19,8 @@ public class Property {
         this.description = description;
         this.address = address;
         this.uid=uid;
-        this.uniqueproperty=uniqueproperty;
-        this.filepath=filepath;
+        this.uniquepropertyid = uniquepropertyid;
+        this.imagefilepath=filepath;
     }
 
     public Property() {
@@ -86,19 +82,19 @@ public class Property {
         this.uid = uid;
     }
 
-    public String getFilepath() {
-        return filepath;
+    public String getImagefilepath() {
+        return imagefilepath;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setImagefilepath(String filepath) {
+        this.imagefilepath = filepath;
     }
 
-    public String getUniqueproperty() {
-        return uniqueproperty;
+    public String getUniquepropertyid() {
+        return uniquepropertyid;
     }
 
-    public void setUniqueproperty(String uniqueproperty) {
-        this.uniqueproperty = uniqueproperty;
+    public void setUniquepropertyid(String uniquepropertyid) {
+        this.uniquepropertyid = uniquepropertyid;
     }
 }

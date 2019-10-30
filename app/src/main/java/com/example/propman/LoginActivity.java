@@ -3,7 +3,9 @@ package  com.example.propman;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private EditText email;
     private EditText password;
+    private Button verifyEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.createAccount).setOnClickListener(this);
         findViewById(R.id.signIn).setOnClickListener(this);
         findViewById(R.id.signOut).setOnClickListener(this);
+        verifyEmail=findViewById(R.id.verifyEmail);
         findViewById(R.id.verifyEmail).setOnClickListener(this);
         findViewById(R.id.forgetPassword).setOnClickListener(this);
 
@@ -46,19 +50,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
-    private void updateUI(FirebaseUser user) {
 
-        if (user != null) {
-            //currently there is a user
-
-        }else{
-            //no users logged in
-
-        }
-    }
 
     private void createAccount(String email, final String password) {
 
@@ -83,16 +78,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             reference.child(user.getUid()).child("bdate").setValue("");
                             reference.child(user.getUid()).child("uid").setValue(user.getUid());
 
-                            Toast.makeText(LoginActivity.this, "Account created, you can now sign in",
+                            Toast.makeText(LoginActivity.this, "Account created, you can now sign in.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(user);
+
                     } else
 
                     {
 
                         Toast.makeText(LoginActivity.this, "Account creation failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+
                     }
                 }
 
@@ -155,6 +150,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this,
                                     "Successfully signed in",
                                     Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(getApplicationContext(), Edit_profile.class);
+                            startActivity(intent);
+
                             findViewById(R.id.signIn).setVisibility(View.GONE);
                             findViewById(R.id.signOut).setVisibility(View.VISIBLE);
                             findViewById(R.id.forgetPassword).setVisibility(View.GONE);
@@ -170,14 +169,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             findViewById(R.id.password).setVisibility(View.GONE);
 
 
-                            Intent intent = new Intent(getApplicationContext(), Edit_profile.class);
-                            startActivity(intent);
+
                         } else {
 
 
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed, wrong email or password.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+
                         }
 
 
@@ -203,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.createAccount).setVisibility(View.VISIBLE);
         findViewById(R.id.email).setVisibility(View.VISIBLE);
         findViewById(R.id.password).setVisibility(View.VISIBLE);
-        updateUI(null);
+
 
     }
 
@@ -313,7 +311,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isEmailValid(String email) {
 
-        return email.contains("@");
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {

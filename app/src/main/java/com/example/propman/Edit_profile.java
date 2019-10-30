@@ -1,13 +1,14 @@
 package com.example.propman;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-public class Edit_profile extends LoginActivity {
+public class Edit_profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private DatabaseReference userref;
@@ -70,6 +71,7 @@ public class Edit_profile extends LoginActivity {
                     inputaddress.setText(dataSnapshot.child(uid).child("address").getValue(String.class));
                     inputmDateDisplay.setText(dataSnapshot.child(uid).child("bdate").getValue(String.class));
                     inputemail.setText(mail);
+
                 }else{
                     inputemail.setText(mail);
                   }
@@ -99,7 +101,7 @@ public class Edit_profile extends LoginActivity {
         findViewById(R.id.signout).setOnClickListener(this);
         findViewById(R.id.verifyEmail).setOnClickListener(this);
         findViewById(R.id.addproperty).setOnClickListener(this);
-        //findViewById(R.id.showproperties).setOnClickListener(this);
+        findViewById(R.id.showprop).setOnClickListener(this);
         findViewById(R.id.showusers).setOnClickListener(this);
 
         mPickDate.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +129,8 @@ public class Edit_profile extends LoginActivity {
         boolean valid = true;
         inputemail.setError(null);
         inputphone.setError(null);
+        inputname.setError(null);
+        inputsurname.setError(null);
 
         String email2 = inputemail.getText().toString();
         if (TextUtils.isEmpty(email2)) {
@@ -140,7 +144,15 @@ public class Edit_profile extends LoginActivity {
             inputemail.setError(null);
         }
         String phone2 = inputphone.getText().toString();
-        if (TextUtils.isEmpty(phone2)) {
+        if(TextUtils.isEmpty(inputname.getText().toString())){
+            inputname.setError("This field is required.");
+            valid = false;
+
+        }else if(TextUtils.isEmpty(inputsurname.getText().toString())){
+            inputsurname.setError("This field is required.");
+            valid = false;
+        }
+        else if (TextUtils.isEmpty(phone2)) {
             inputphone.setError("This field is required.");
             valid = false;
         } else if(!isValidPhoneNumber(phone2)){
@@ -154,7 +166,7 @@ public class Edit_profile extends LoginActivity {
         return valid;
     }
     private static final boolean isValidPhoneNumber(CharSequence target) {
-        if (target.length()!=10) {
+        if (target.length()< 10) {
             return false;
         } else {
             return android.util.Patterns.PHONE.matcher(target).matches();
@@ -163,32 +175,9 @@ public class Edit_profile extends LoginActivity {
 
     private boolean isEmailValid(String email) {
 
-        return email.contains("@");
+        return (Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
-    private void resetPassword(String email){
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (!validateForm()) {
-            return;
-        }
-        else {
-
-            auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-
-                                Toast.makeText(Edit_profile.this, "Reset password email sent",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Edit_profile.this, "Unknown error",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-    }
     private void sendEmailVerification() {
 
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -242,7 +231,8 @@ public class Edit_profile extends LoginActivity {
     @Override
     public void onClick(View v) {
 
-
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
 
          if(v.getId() == R.id.signout){
             signout();
@@ -253,8 +243,13 @@ public class Edit_profile extends LoginActivity {
          else if(v.getId() == R.id.addproperty){
              Intent intent = new Intent(getApplicationContext(), AddProperty.class);
              startActivity(intent);         }
+         else if(v.getId() == R.id.showprop){
+             Intent intent = new Intent(Edit_profile.this, DisplayProperties.class);
+             intent.putExtra("uid", uid);
+             startActivity(intent);
+         }
          else if(v.getId() == R.id.save){
-             FirebaseUser user = mAuth.getCurrentUser();
+
              String name=inputname.getText().toString();
              String surname=inputsurname.getText().toString();
              String phone=inputphone.getText().toString();
@@ -277,23 +272,21 @@ public class Edit_profile extends LoginActivity {
                  Toast.makeText(Edit_profile.this, "Changes are saved successfully.",
                          Toast.LENGTH_SHORT).show();
              }
-         }else if(v.getId() == R.id.showproperties){
-             Intent intent = new Intent(getApplicationContext(), ViewProperty.class);
-             startActivity(intent);
-         }/*
-         else if(v.getId() == R.id.respass) {
-
-             try {
-                 String email = inputemail.getText().toString();
-                 resetPassword(email);
-             } catch (Exception e) {
-                 String email = "";
-                 resetPassword(email);
-             }
-         }*/
+         }
          else if(v.getId() == R.id.showusers){
-             Intent intent = new Intent(getApplicationContext(), Users.class);
-             startActivity(intent);
+             if(!validateForm()){
+                 return;
+
+             }else if(mDatabase.child("userlist").child(uid).child("name").equals("")){
+                 Toast.makeText(Edit_profile.this, "Add your name and click save button before proceeding.",
+                         Toast.LENGTH_SHORT).show();
+             return;
+             }
+
+             else {
+                 Intent intent = new Intent(getApplicationContext(), Users.class);
+                 startActivity(intent);
+             }
          }
 
     }
@@ -326,6 +319,16 @@ public class Edit_profile extends LoginActivity {
                         mYear, mMonth, mDay);
         }
         return null;
+    }
+
+    @Override
+    public void onBackPressed() {
+        signout();
+        Toast.makeText(Edit_profile.this,
+                "Signed out",
+                Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(Edit_profile.this,LoginActivity.class);
+        startActivity(i);
     }
 
 }
