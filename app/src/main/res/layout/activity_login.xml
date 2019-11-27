@@ -9,61 +9,116 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
+    android:background="@drawable/bckg"
     tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="367dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        android:background="@drawable/prop" />
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="45dp"
         android:ems="10"
-        android:hint="Enter your email address..."
+        android:paddingBottom="3px"
+        android:hint="Email Address"
+        android:fontFamily="@font/sans_bold"
         android:includeFontPadding="false"
-        android:inputType="textEmailAddress" />
+        android:layout_marginBottom="1.5pt"
+        android:background="@drawable/button1"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimary"
+        android:textSize="9pt"
+        />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="45dp"
         android:ems="10"
+        android:paddingBottom="3px"
         android:inputType="textPassword"
-        android:hint="Enter your password..."
+        android:hint="Password"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="5pt"
+        android:background="@drawable/button1"
+        android:textSize="9pt"
         />
-
-    <Button
-        android:id="@+id/createAccount"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Account" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="2pt">
+        <Button
+            android:id="@+id/createAccount"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button2"
+            android:fontFamily="@font/sans_bold"
+            android:text="Create Account"
+            android:textColor="#FF8F8C8C"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3pt"
+            />
 
-    <Button
-        android:id="@+id/signIn"
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button2"
+            android:fontFamily="@font/sans_bold"
+            android:text="SIGN IN"
+            android:textAllCaps="false"
+            android:textColor="#FF8F8C8C"
+            android:visibility="visible"
+            android:layout_marginBottom="3pt"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SIGN IN"
-        android:textAllCaps="false"
-        android:visibility="visible" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="2pt">
+        <Button
+            android:id="@+id/signOut"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:text="Sign Out"
+            android:fontFamily="@font/sans_bold"
+            android:background="@drawable/button2"
+            android:textColor="#FF8F8C8C"
+            android:layout_marginBottom="3pt"
+            />
 
-    <Button
-        android:id="@+id/signOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Sign Out" />
+        <Button
+            android:id="@+id/verifyEmail"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Verify your Email"
+            android:visibility="gone"
+            android:fontFamily="@font/sans_bold"
+            android:background="@drawable/button2"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3pt"/>
 
-    <Button
-        android:id="@+id/verifyEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify your Email"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/forgetPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:text="Forget Password" />
-
-
+        <Button
+            android:id="@+id/forgetPassword"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_1"
+            android:fontFamily="@font/sans_bold"
+            android:text="Forget Password"
+            android:textColor="#FF323E48"
+            android:visibility="visible" />
+    </LinearLayout>
 
 </LinearLayout>
