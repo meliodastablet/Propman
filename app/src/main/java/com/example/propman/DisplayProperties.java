@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayProperties extends AppCompatActivity {
-
+    static boolean active = false;
     RecyclerView recylerContact;
     ArrayList<Property> data=new ArrayList<>();
     private FirebaseAuth mAuth;
@@ -88,6 +88,16 @@ public class DisplayProperties extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        active = false;
+    }
 
     public void custom(ArrayList<Property> a){
         recylerContact = findViewById(R.id.recylerContact);
@@ -95,7 +105,7 @@ public class DisplayProperties extends AppCompatActivity {
 
         LinearLayoutManager layoutManaget = new LinearLayoutManager(this);
         recylerContact.setLayoutManager(layoutManaget);
-        if(a.isEmpty()){
+        if(a.isEmpty() && active){
             Toast.makeText(DisplayProperties.this, "This user has no properties.",
                     Toast.LENGTH_SHORT).show();
         }

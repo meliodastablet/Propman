@@ -14,6 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +31,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewProperty extends AppCompatActivity implements View.OnClickListener {
     Uri filePath;
@@ -41,7 +50,9 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
     int val;
     String value="";
     int queue= 0;
-
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAERSaSd4:APA91bFoMzFZ8RnrhePzG8a36Cujw9T-ZvH16vzsyGuzHurYIKOOwU8dV6kGaF0ghlFbJ5zO5ljar6lwI5NbdWmk06ek8p3jEKrcZJ8lKdh8t6buk_UcNJew5Zj6R2FYpzp7zFeWda6g";
+    final private String contentType = "application/json";
     FirebaseStorage storage;
     DatabaseReference propertydatabase;
     DatabaseReference propertyref;
@@ -50,6 +61,9 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
     Property property;
     String uid,uid2;
     String ruid="";
+    String useruid="";
+    public static boolean solver = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,20 +86,23 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.smess).setOnClickListener(this);
         findViewById(R.id.accept).setOnClickListener(this);
         findViewById(R.id.deny).setOnClickListener(this);
-
+        findViewById(R.id.show_profile).setOnClickListener(this);
             uid=user.getUid();
             Intent intent = getIntent();
             ParcelableProperty parcelableProperty = (ParcelableProperty) intent
                     .getParcelableExtra("property");
             property = parcelableProperty.getProperty();
             uid2 =intent.getExtras().getString("uid");
+        System.out.println("UID FIRST APPERIANCE "+ uid2);
         System.out.println(uid);
       if(uid2 == null){
           uid2 = uid;
       }
             if(uid.equals(uid2)){
+                System.out.println("UID 2 APPERIANCE "+ uid2);
                 findViewById(R.id.request).setVisibility(View.GONE);
                 findViewById(R.id.smess).setVisibility(View.GONE);
+                findViewById(R.id.show_profile).setVisibility(View.GONE);
                 findViewById(R.id.delete).setVisibility(View.VISIBLE);
                 findViewById(R.id.edit).setVisibility(View.VISIBLE);
 
@@ -96,6 +113,7 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
                 findViewById(R.id.edit).setVisibility(View.GONE);
                 findViewById(R.id.request).setVisibility(View.VISIBLE);
                 findViewById(R.id.smess).setVisibility(View.VISIBLE);
+                findViewById(R.id.show_profile).setVisibility(View.VISIBLE);
             }
 
         propertyref = propertydatabase.child("propertylist");
@@ -106,6 +124,7 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
                     queue = Integer.parseInt(dataSnapshot.child(uid2).child(property.getUniquepropertyid()).child("queue").getValue().toString());
                     value = dataSnapshot.child(uid2).child(property.getUniquepropertyid()).child("rvalue").getValue().toString();
                     val = Integer.parseInt(value);
+                    useruid=dataSnapshot.child(uid2).child(property.getUniquepropertyid()).child("uid").getValue().toString();
                     System.out.println(val);
 
                     ruid = dataSnapshot.child(uid2).child(property.getUniquepropertyid()).child("ruid").getValue().toString();
@@ -153,9 +172,9 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
         tw4.setText(property.getTitle());
         tw5.setText("Price: " + property.getPrice());
         tw6.setText("Number of rooms: " +property.getRooms());
-        tw7.setText("Size: " + property.getarea() + "");
+        tw9.setText("Size: " + property.getarea() + "");
         tw8.setText("Description: " + property.getDescription());
-        tw9.setText("Address: " + property.getAddress());
+        tw7.setText("Address: " + property.getAddress());
 
         //image
 
@@ -205,8 +224,10 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
 
 
             if(val == 0){
+                System.out.println("UID 3 APPERIANCE"+ uid2);
                 propertydatabase.child("propertylist").child(uid2).child(property.getUniquepropertyid()).child("rvalue").setValue("1");
                 propertydatabase.child("propertylist").child(uid2).child(property.getUniquepropertyid()).child("ruid").setValue(uid);
+                notification(uid2,"Rent Request Received","You got a rent request for your property.","RENT");
                 request.setText("Request Sent.");
 
             }
@@ -271,6 +292,9 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
 
         }else if(v.getId() == R.id.smess){
             Intent intent = new Intent(getApplicationContext(), Messaging.class);
+            intent.putExtra("uidx", uid2);
+            System.out.println("UID 4 APPERIANCE"+ uid2);
+            solver = true;
             startActivity(intent);
 
         }
@@ -282,6 +306,7 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(ViewProperty.this,
                     "Request accepted.",
                     Toast.LENGTH_SHORT).show();
+            notification(ruid,"Congrats!","Your rent request is accepted.","AD");
 
         }else if(v.getId() == R.id.deny){
             propertydatabase.child("propertylist").child(uid).child(property.getUniquepropertyid()).child("rvalue").setValue("0");
@@ -291,6 +316,11 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(ViewProperty.this,
                     "Request denied.",
                     Toast.LENGTH_SHORT).show();
+            notification(ruid,"We're sorry!","Your rent request is denied.","AD");
+        }else if(v.getId() == R.id.show_profile){
+            Intent i = new Intent(ViewProperty.this,Show_profile.class);
+            i.putExtra("uid", useruid);
+            startActivity(i);
         }
     }
     public void custom(Uri uri){
@@ -304,6 +334,62 @@ public class ViewProperty extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         Intent i = new Intent(ViewProperty.this,Edit_profile.class);
         startActivity(i);
+    }
+
+    public void notification(String uid,String NOTIFICATION_TITLE, String NOTIFICATION_MESSAGE, String type){
+
+
+        String TOPIC = "/topics/" + uid ; //topic has to match what the receiver subscribed to
+
+
+        JSONObject notification = new JSONObject();
+        JSONObject notifcationBody = new JSONObject();
+
+        try {
+
+            notifcationBody.put("type", type);
+            notifcationBody.put("title", NOTIFICATION_TITLE);
+            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+            notifcationBody.put("id", user.getUid());
+
+            notification.put("to", TOPIC);
+            notification.put("data", notifcationBody);
+
+        } catch (JSONException e) {
+
+        }
+
+        sendNotification(notification);
+    }
+
+    private void sendNotification(JSONObject notification) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("onResponse: " + response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(ViewProperty.this, "Request error", Toast.LENGTH_LONG).show();
+
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
 
