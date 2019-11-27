@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Calendar;
 
@@ -32,22 +33,17 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private DatabaseReference userref;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
     private EditText inputname;
     private EditText inputsurname;
     private EditText inputphone;
     private EditText inputemail;
     private EditText inputaddress;
-    private TextView inputmDateDisplay;
-    private Button mPickDate;
     private Button save;
     private Button signout;
     private Button addproperty;
     private Button showproperties;
     private Button showusers;
-    static final int DATE_DIALOG_ID = 0;
+
 
 
 
@@ -69,7 +65,6 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
                     inputsurname.setText(dataSnapshot.child(uid).child("surname").getValue(String.class));
                     inputphone.setText(dataSnapshot.child(uid).child("phone").getValue(String.class));
                     inputaddress.setText(dataSnapshot.child(uid).child("address").getValue(String.class));
-                    inputmDateDisplay.setText(dataSnapshot.child(uid).child("bdate").getValue(String.class));
                     inputemail.setText(mail);
 
                 }else{
@@ -89,9 +84,6 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
-        inputmDateDisplay =  (TextView) findViewById(R.id.showMyDate);
-        mPickDate = (Button)findViewById(R.id.myDatePickerButton);
         inputname=(EditText)findViewById(R.id.name);
         inputsurname=(EditText)findViewById(R.id.surname);
         inputphone=(EditText)findViewById(R.id.phone);
@@ -102,26 +94,7 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.verifyEmail).setOnClickListener(this);
         findViewById(R.id.addproperty).setOnClickListener(this);
         findViewById(R.id.showprop).setOnClickListener(this);
-        findViewById(R.id.showusers).setOnClickListener(this);
-
-        mPickDate.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG_ID);
-            }
-        });
-
-
-
-
-
-        // get the current date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-
-        // display the current date
-        updateDisplay();
+        findViewById(R.id.searchprop).setOnClickListener(this);
 
     }
     private boolean validateForm(){
@@ -217,7 +190,9 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
 
     }
     private void signout() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getUid());
         mAuth.signOut();
+
 
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
@@ -236,17 +211,29 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
 
          if(v.getId() == R.id.signout){
             signout();
+
         }
         else if(v.getId() == R.id.verifyEmail){
             sendEmailVerification();
         }
-         else if(v.getId() == R.id.addproperty){
-             Intent intent = new Intent(getApplicationContext(), AddProperty.class);
-             startActivity(intent);         }
+         else if(v.getId() == R.id.addproperty) {
+             if (!validateForm()) {
+                 return;
+
+             } else {
+                 Intent intent = new Intent(getApplicationContext(), AddProperty.class);
+                 startActivity(intent);
+             }
+         }
          else if(v.getId() == R.id.showprop){
-             Intent intent = new Intent(Edit_profile.this, DisplayProperties.class);
-             intent.putExtra("uid", uid);
-             startActivity(intent);
+             if(!validateForm()){
+                 return;
+
+             }else {
+                 Intent intent = new Intent(Edit_profile.this, DisplayProperties.class);
+                 intent.putExtra("uid", uid);
+                 startActivity(intent);
+             }
          }
          else if(v.getId() == R.id.save){
 
@@ -254,7 +241,6 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
              String surname=inputsurname.getText().toString();
              String phone=inputphone.getText().toString();
              String address=inputaddress.getText().toString();
-             String bdate=inputmDateDisplay.getText().toString();
              if (!validateForm()) {
                  return;
              }
@@ -266,14 +252,29 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
                  mDatabase.child("userlist").child(user.getUid()).child("phone").setValue(phone);
                  mDatabase.child("userlist").child(user.getUid()).child("mail").setValue(user.getEmail());
                  mDatabase.child("userlist").child(user.getUid()).child("address").setValue(address);
-                 mDatabase.child("userlist").child(user.getUid()).child("bdate").setValue(bdate);
+
                  mDatabase.child("userlist").child(user.getUid()).child("uid").setValue(user.getUid());
 
                  Toast.makeText(Edit_profile.this, "Changes are saved successfully.",
                          Toast.LENGTH_SHORT).show();
              }
+         }   else if(v.getId() == R.id.searchprop){
+             if(!validateForm()){
+                 return;
+
+             }else if(mDatabase.child("userlist").child(uid).child("name").equals("")){
+                 Toast.makeText(Edit_profile.this, "Add your name and click save button before proceeding.",
+                         Toast.LENGTH_SHORT).show();
+                 return;
+             }
+
+             else {
+                 Intent intent = new Intent(Edit_profile.this, Property_search.class);
+                 startActivity(intent);
+             }
+
          }
-         else if(v.getId() == R.id.showusers){
+         /*else if(v.getId() == R.id.showusers){
              if(!validateForm()){
                  return;
 
@@ -287,38 +288,8 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
                  Intent intent = new Intent(getApplicationContext(), Users.class);
                  startActivity(intent);
              }
-         }
+         }*/
 
-    }
-
-    private void updateDisplay() {
-        this.inputmDateDisplay.setText(
-                new StringBuilder()
-                        // Month is 0 based so add 1
-                        .append(mMonth + 1).append("-")
-                        .append(mDay).append("-")
-                        .append(mYear).append(" "));
-    }
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear = year;
-                    mMonth = monthOfYear;
-                    mDay = dayOfMonth;
-                    updateDisplay();
-                }
-            };
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this,
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
-        }
-        return null;
     }
 
     @Override

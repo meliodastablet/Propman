@@ -194,7 +194,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
         uniqueproperty.child("uniquepropertyid").setValue(uniquepropertyid);
 
         uploadImage(uniquepropertyid);
-        viewproperty=new Property(title,price,rooms,address,description,area,user.getUid(),filePath.toString(),uniquepropertyid);
+        viewproperty=new Property(title,price,rooms,area,description,address,user.getUid(),filePath.toString(),uniquepropertyid);
         return viewproperty;
     }
 
@@ -231,7 +231,7 @@ public class AddProperty extends AppCompatActivity implements View.OnClickListen
             valid = false;
         }
         else if(TextUtils.isEmpty(inputarea.getText().toString())){
-            inputrooms.setError("This field is required.");
+            inputarea.setError("This field is required.");
             valid = false;
         }
 
