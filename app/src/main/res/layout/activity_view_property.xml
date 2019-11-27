@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewProperty">
+    tools:context=".ViewProperty"
+    android:background="@drawable/bckg">
+
+    <ImageView
+        android:layout_width="260dp"
+        android:layout_height="74dp"
+        android:layout_gravity="center"
+        android:background="@drawable/prp" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="334dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
-        android:text=""
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#000000"
-        android:textSize="75px" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="335dp"
-        android:layout_height="193dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="335dp"
-        android:layout_height="22dp"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/sans_semibold"
+        android:text=""
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FF323E48"
+        android:textSize="70px" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="300dp"
+        android:layout_height="155dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="0.5pt" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="335dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/sans_bold"
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="50px" />
@@ -49,25 +58,25 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="335dp"
-        android:layout_height="23dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/sans_bold"
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="50px" />
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="336dp"
-        android:layout_height="20dp"
+        android:layout_width="335dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/sans_bold"
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="50px" />
@@ -75,79 +84,91 @@
     <TextView
         android:id="@+id/textView8"
         android:layout_width="335dp"
-        android:layout_height="23dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/sans_bold"
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="50px" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="336dp"
-        android:layout_height="29dp"
+        android:layout_width="335dp"
+        android:layout_height="34dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/sans_bold"
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="50px" />
-
-    <Button
-        android:id="@+id/smess"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Send Message" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="2pt"
+        android:layout_marginTop="3pt"
+        >
+    <Button
+        android:id="@+id/smess"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:text="Send Message"
+        android:textColor="@color/colorAc" />
 
     <Button
         android:id="@+id/request"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Send Rent Request" />
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:text="Send Rent Request"
+        android:textColor="@color/colorAc" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:layout_marginBottom="2pt"
+        >
         <Button
             android:id="@+id/edit"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="EDIT PROPERTY" />
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:text="EDIT PROPERTY"
+            android:textColor="@color/colorAc" />
 
         <Button
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="DELETE PROPERTY" />
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:text="DELETE PROPERTY"
+            android:textColor="@color/colorAc" />
     </LinearLayout>
 
     <TextView
@@ -157,32 +178,60 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Received rent request"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:layout_marginBottom="2pt"
+        >
         <Button
             android:id="@+id/accept"
-            android:layout_width="213dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
             android:gravity="center"
             android:text="Accept "
+            android:textColor="@color/colorAc"
             android:visibility="gone" />
 
         <Button
             android:id="@+id/deny"
-            android:layout_width="200dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
             android:gravity="center"
             android:text="Deny"
+            android:textColor="@color/colorAc"
             android:visibility="gone" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/show_profile"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorAc"
+        android:text="SHOW PROFILE" />
 
 </LinearLayout>
