@@ -18,8 +18,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
-
+import java.io.IOException;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -75,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             reference.child(user.getUid()).child("surname").setValue("");
                             reference.child(user.getUid()).child("phone").setValue("");
                             reference.child(user.getUid()).child("address").setValue("");
-                            reference.child(user.getUid()).child("bdate").setValue("");
                             reference.child(user.getUid()).child("uid").setValue(user.getUid());
 
                             Toast.makeText(LoginActivity.this, "Account created, you can now sign in.",
@@ -151,6 +152,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     "Successfully signed in",
                                     Toast.LENGTH_SHORT).show();
 
+
+                            FirebaseMessaging.getInstance().subscribeToTopic(mAuth.getUid());
                             Intent intent = new Intent(getApplicationContext(), Edit_profile.class);
                             startActivity(intent);
 
@@ -190,6 +193,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signOut() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getUid());
+        System.out.println("anan");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("banan");
+                try {
+                    FirebaseInstanceId.getInstance().deleteInstanceId();
+
+                    System.out.println("PLSPLS2");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("aq");
+                }
+            }
+        }).start();
+        System.out.println("abiii");
         mAuth.signOut();
         Toast.makeText(LoginActivity.this,
                 "Successfully signed out.",

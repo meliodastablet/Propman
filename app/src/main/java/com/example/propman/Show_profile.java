@@ -26,12 +26,12 @@ public class Show_profile extends LoginActivity {
     private TextView phone;
     private TextView mail;
     private TextView address;
-    private TextView bdate;
     private Button signout;
     private Button addproperty;
     private Button showproperties;
     private Button showusers;
     private String uid4sp;
+    private String uidx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,7 @@ public class Show_profile extends LoginActivity {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         final String uid=user.getUid();
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userref = mDatabase.child("userlist");
         userref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -47,6 +48,7 @@ public class Show_profile extends LoginActivity {
                 Intent intent = getIntent();
                 String uid2 = intent.getExtras().getString("uid");
                 uid4sp = uid2;
+                deneme(uid2);
 
                 if (dataSnapshot.hasChild(uid2)) {
                     if ((dataSnapshot.child(uid2).child("name")).getValue(String.class)!="") {
@@ -54,8 +56,6 @@ public class Show_profile extends LoginActivity {
                         surname.setText(dataSnapshot.child(uid2).child("surname").getValue(String.class));
                         phone.setText(dataSnapshot.child(uid2).child("phone").getValue(String.class));
                         address.setText(dataSnapshot.child(uid2).child("address").getValue(String.class));
-                        bdate.setText(dataSnapshot.child(uid2).child("bdate").getValue(String.class));
-                        bdate.setText(dataSnapshot.child(uid2).child("bdate").getValue(String.class));
                         mail.setText(dataSnapshot.child(uid2).child("mail").getValue(String.class));
                     } else {
                         Toast.makeText(Show_profile.this, "Profile information is not edited yet!",
@@ -69,7 +69,6 @@ public class Show_profile extends LoginActivity {
 
             }
         });
-        bdate =  (TextView) findViewById(R.id.bdate);
         name=(TextView)findViewById(R.id.name);
         surname=(TextView)findViewById(R.id.surname);
         phone=(TextView)findViewById(R.id.phone);
@@ -91,15 +90,18 @@ public class Show_profile extends LoginActivity {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.signout){
+
             signout();
         }
         else if(v.getId() == R.id.sendmessage){
             Intent intent = new Intent(getApplicationContext(), Messaging.class);
+            System.out.println("bewww"+uidx);
+            intent.putExtra("uidx", uidx);
             startActivity(intent);         }
 
         else if(v.getId() == R.id.showprop2){
             Intent i = new Intent(Show_profile.this, DisplayProperties.class);
-            i.putExtra("uid", uid4sp);
+            i.putExtra("uid",uidx);
             startActivity(i);
         }
 
@@ -108,5 +110,10 @@ public class Show_profile extends LoginActivity {
             startActivity(intent);
         }*/
 
+    }
+
+    public void deneme(String s){
+        uidx = s;
+        System.out.println(uidx);
     }
 }

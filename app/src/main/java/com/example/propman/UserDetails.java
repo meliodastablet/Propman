@@ -8,7 +8,6 @@ public class UserDetails {
     static String surname = "";
     static String phone = "";
     static String address = "";
-    static String date = "";
     static String mail = "";
     static String uid = "";
 
