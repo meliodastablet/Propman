@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">PROPMAN</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="title_activity_property_search">Property_search</string>
 </resources>
