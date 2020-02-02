@@ -3,17 +3,13 @@ package com.example.propman;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,8 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.util.Calendar;
 
 public class Edit_profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -43,10 +37,7 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
     private Button addproperty;
     private Button showproperties;
     private Button showusers;
-
-
-
-
+    private Button show_calendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +46,7 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
         final FirebaseUser user = mAuth.getCurrentUser();
         final String uid=user.getUid();
         final String mail=user.getEmail();
+        findViewById(R.id.payb).setOnClickListener(this);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userref = mDatabase.child("userlist");
         userref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,7 +61,7 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
 
                 }else{
                     inputemail.setText(mail);
-                  }
+                }
                 // Check if user's email is verified
                 boolean emailVerified = user.isEmailVerified();
                 if(emailVerified){
@@ -95,7 +87,8 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.addproperty).setOnClickListener(this);
         findViewById(R.id.showprop).setOnClickListener(this);
         findViewById(R.id.searchprop).setOnClickListener(this);
-
+        findViewById(R.id.search_on_map).setOnClickListener(this);
+        findViewById(R.id.show_calendar).setOnClickListener(this);
     }
     private boolean validateForm(){
 
@@ -191,6 +184,9 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
     }
     private void signout() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getUid());
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("RyCnOh1uRyOXSwcgaZOqpXIMkYs1");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("xUXeSUAuDXWPZyLQJIzGzDLFzVE3");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("6MK3ZduGX1eF0nB9Bmly7tnL2K12");
         mAuth.signOut();
 
 
@@ -209,71 +205,80 @@ public class Edit_profile extends AppCompatActivity implements View.OnClickListe
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
 
-         if(v.getId() == R.id.signout){
+        if(v.getId() == R.id.signout){
             signout();
 
         }
         else if(v.getId() == R.id.verifyEmail){
             sendEmailVerification();
         }
-         else if(v.getId() == R.id.addproperty) {
-             if (!validateForm()) {
-                 return;
+        else if(v.getId() == R.id.addproperty) {
+            if (!validateForm()) {
+                return;
 
-             } else {
-                 Intent intent = new Intent(getApplicationContext(), AddProperty.class);
-                 startActivity(intent);
-             }
-         }
-         else if(v.getId() == R.id.showprop){
-             if(!validateForm()){
-                 return;
+            } else {
+                Intent intent = new Intent(getApplicationContext(), AddPropMap.class);
+                startActivity(intent);
+            }
+        }
+        else if(v.getId() == R.id.showprop){
+            if(!validateForm()){
+                return;
 
-             }else {
-                 Intent intent = new Intent(Edit_profile.this, DisplayProperties.class);
-                 intent.putExtra("uid", uid);
-                 startActivity(intent);
-             }
-         }
-         else if(v.getId() == R.id.save){
+            }else {
+                Intent intent = new Intent(Edit_profile.this, DisplayProperties.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        }
+        else if(v.getId() == R.id.save){
 
-             String name=inputname.getText().toString();
-             String surname=inputsurname.getText().toString();
-             String phone=inputphone.getText().toString();
-             String address=inputaddress.getText().toString();
-             if (!validateForm()) {
-                 return;
-             }
-             else {
+            String name=inputname.getText().toString();
+            String surname=inputsurname.getText().toString();
+            String phone=inputphone.getText().toString();
+            String address=inputaddress.getText().toString();
+            if (!validateForm()) {
+                return;
+            }
+            else {
 
 
-                 mDatabase.child("userlist").child(user.getUid()).child("name").setValue(name);
-                 mDatabase.child("userlist").child(user.getUid()).child("surname").setValue(surname);
-                 mDatabase.child("userlist").child(user.getUid()).child("phone").setValue(phone);
-                 mDatabase.child("userlist").child(user.getUid()).child("mail").setValue(user.getEmail());
-                 mDatabase.child("userlist").child(user.getUid()).child("address").setValue(address);
+                mDatabase.child("userlist").child(user.getUid()).child("name").setValue(name);
+                mDatabase.child("userlist").child(user.getUid()).child("surname").setValue(surname);
+                mDatabase.child("userlist").child(user.getUid()).child("phone").setValue(phone);
+                mDatabase.child("userlist").child(user.getUid()).child("mail").setValue(user.getEmail());
+                mDatabase.child("userlist").child(user.getUid()).child("address").setValue(address);
 
-                 mDatabase.child("userlist").child(user.getUid()).child("uid").setValue(user.getUid());
+                mDatabase.child("userlist").child(user.getUid()).child("uid").setValue(user.getUid());
 
-                 Toast.makeText(Edit_profile.this, "Changes are saved successfully.",
-                         Toast.LENGTH_SHORT).show();
-             }
-         }   else if(v.getId() == R.id.searchprop){
-             if(!validateForm()){
-                 return;
+                Toast.makeText(Edit_profile.this, "Changes are saved successfully.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }   else if(v.getId() == R.id.searchprop){
+            if(!validateForm()){
+                return;
 
-             }else if(mDatabase.child("userlist").child(uid).child("name").equals("")){
-                 Toast.makeText(Edit_profile.this, "Add your name and click save button before proceeding.",
-                         Toast.LENGTH_SHORT).show();
-                 return;
-             }
+            }else if(mDatabase.child("userlist").child(uid).child("name").equals("")){
+                Toast.makeText(Edit_profile.this, "Add your name and click save button before proceeding.",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                Intent intent = new Intent(Edit_profile.this, Property_search.class);
+                startActivity(intent);
+            }
 
-             else {
-                 Intent intent = new Intent(Edit_profile.this, Property_search.class);
-                 startActivity(intent);
-             }
+        }else if(v.getId() == R.id.search_on_map){
+            Intent intent = new Intent(Edit_profile.this, MapsActivity.class);
+            startActivity(intent);
+        }else if(v.getId() == R.id.show_calendar){
+            Intent intent = new Intent(Edit_profile.this, Show_Calendar.class);
+            startActivity(intent);
+        }  if(v.getId() == R.id.payb){
+            Intent intent = new Intent(Edit_profile.this, Payment_History.class);
+            startActivity(intent);
+        }
 
-         }
          /*else if(v.getId() == R.id.showusers){
              if(!validateForm()){
                  return;

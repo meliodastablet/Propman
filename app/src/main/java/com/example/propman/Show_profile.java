@@ -32,6 +32,7 @@ public class Show_profile extends LoginActivity {
     private Button showusers;
     private String uid4sp;
     private String uidx;
+    public static boolean solver = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +97,7 @@ public class Show_profile extends LoginActivity {
         else if(v.getId() == R.id.sendmessage){
             Intent intent = new Intent(getApplicationContext(), Messaging.class);
             System.out.println("bewww"+uidx);
+            solver = true;
             intent.putExtra("uidx", uidx);
             startActivity(intent);         }
 

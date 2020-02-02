@@ -1,6 +1,9 @@
 package  com.example.propman;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -22,6 +25,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -194,6 +199,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void signOut() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(mAuth.getUid());
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("RyCnOh1uRyOXSwcgaZOqpXIMkYs1");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("xUXeSUAuDXWPZyLQJIzGzDLFzVE3");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("6MK3ZduGX1eF0nB9Bmly7tnL2K12");
         System.out.println("anan");
         new Thread(new Runnable() {
             @Override
@@ -304,16 +312,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             String email2 = email.getText().toString();
             String pass2 = password.getText().toString();
-            signIn(email2,pass2);
+             if(isNetworkAvailable()) {
+                 signIn(email2, pass2);
+             }else{
+                 Toast.makeText(LoginActivity.this, "Check your internet connection.",
+                         Toast.LENGTH_SHORT).show();
+             }
+
         }
         else if(v.getId() == R.id.signOut){
-            signOut();
+           signOut();
+
         }
         else if(v.getId() == R.id.verifyEmail){
             sendEmailVerification();
         }
         else if(v.getId() == R.id.forgetPassword){
-
             try {
                 String email2 = email.getText().toString();
                 resetPassword(email2);
@@ -340,5 +354,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 
 }

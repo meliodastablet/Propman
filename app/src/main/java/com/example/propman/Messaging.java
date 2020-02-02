@@ -69,6 +69,16 @@ public class Messaging extends AppCompatActivity {
             System.out.println("UID 5 APPERIANCE " + uid4sp);
             System.out.println("atat" + UserDetails.chatWith);
             ViewProperty.solver = false;
+        } else if(Show_profile.solver){
+            Intent i = getIntent();
+            System.out.println("CHATWITH1 " + UserDetails.chatWith);
+            System.out.println("CHATWITH2 " + UserDetails.chatWith);
+            String uid4sp = i.getExtras().getString("uidx");
+            UserDetails.username = uid2;
+            UserDetails.chatWith = uid4sp;
+            System.out.println("UID 5 APPERIANCE " + uid4sp);
+            System.out.println("atat" + UserDetails.chatWith);
+            Show_profile.solver = false;
         }
 
 

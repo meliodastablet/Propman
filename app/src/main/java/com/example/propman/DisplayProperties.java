@@ -2,6 +2,7 @@ package com.example.propman;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -38,7 +39,12 @@ public class DisplayProperties extends AppCompatActivity {
     private String address;
     private String uid;
     private String uniqueproperty;
-    private String filepath;
+    private ArrayList<Uri> filePath=new ArrayList<>();
+    private String filepath_count;
+    private String garage;
+    private String pool;
+    private String garden;
+    private String security;
     private Property p;
     public ArrayList<Property> propertyuid=new ArrayList<>();
 
@@ -54,9 +60,6 @@ public class DisplayProperties extends AppCompatActivity {
         Intent intent = getIntent();
         uid = intent.getExtras().getString("uid");
 
-
-
-
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -70,20 +73,14 @@ public class DisplayProperties extends AppCompatActivity {
                     p.setUid(uid);
                     propertyuid.add(p);
 
-
-
                 }
                 custom(propertyuid);
-
-
-
 
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
 
         });
 
@@ -113,5 +110,11 @@ public class DisplayProperties extends AppCompatActivity {
         recylerContact.setAdapter(adapter);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, Edit_profile.class);
+        startActivity(i);
     }
 }

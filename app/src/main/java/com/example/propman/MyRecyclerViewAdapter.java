@@ -42,7 +42,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 ParcelableProperty parcelableProperty = new ParcelableProperty(property);
                 Intent mIntent = new Intent(context.getApplicationContext(), ViewProperty.class);
                 mIntent.putExtra("property", parcelableProperty);
-                System.out.println("R uid" + property.getUid());
                 mIntent.putExtra("uid",property.getUid());
                 context.startActivity(mIntent);
             }

@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,8 +30,10 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class EditProperty extends AppCompatActivity implements View.OnClickListener{
+import java.util.ArrayList;
+import java.util.List;
 
+public class EditProperty extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference propertydatabase;
     private DatabaseReference uniqueproperty;
     private DatabaseReference propref;
@@ -37,7 +43,7 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
     boolean flag = false;
-    private Uri filePath;
+    private ArrayList<Uri> filePath=new ArrayList<>();
     private String uid;
     private EditText inputtitle2;
     private EditText inputprice2;
@@ -45,9 +51,18 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
     private EditText inputarea2;
     private EditText inputaddress2;
     private EditText inputdescription2;
+    private CheckBox pool_cb;
+    private CheckBox garage_cb;
+    private CheckBox garden_cb;
+    private CheckBox security_cb;
+    private EditText inputdues;
+    private int index;
+    private String filepath_count;
     private Button addimage2;
     private Button addproperty2;
+    private int i=0;
     String puid;
+    String coordinate="";
     private final int PICK_IMAGE_REQUEST = 71;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +73,7 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
         uid=user.getUid();
         Intent intent = getIntent();
 
-         puid = intent.getExtras().getString("puid");
+        puid = intent.getExtras().getString("puid");
         final FirebaseUser user = mAuth.getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -68,6 +83,11 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
         inputaddress2 = (EditText) findViewById(R.id.address2);
         inputdescription2 = (EditText) findViewById(R.id.description2);
         inputarea2 = (EditText) findViewById(R.id.area2);
+        garage_cb = (CheckBox) findViewById(R.id.garage_cb);
+        garden_cb = (CheckBox) findViewById(R.id.garden_cb);
+        security_cb = (CheckBox) findViewById(R.id.security_cb);
+        pool_cb = (CheckBox) findViewById(R.id.pool_cb);
+        inputdues = (EditText) findViewById(R.id.dues);
 
         findViewById(R.id.addproperty2).setOnClickListener(this);
         findViewById(R.id.addimage2).setOnClickListener(this);
@@ -82,6 +102,13 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
                     inputdescription2.setText(dataSnapshot.child(uid).child(puid).child("description").getValue(String.class));
                     inputprice2.setText(dataSnapshot.child(uid).child(puid).child("price").getValue(String.class));
                     inputrooms2.setText(dataSnapshot.child(uid).child(puid).child("rooms").getValue(String.class));
+                    pool_cb.setText(dataSnapshot.child(uid).child(puid).child("pool").getValue(String.class));
+                    garage_cb.setText(dataSnapshot.child(uid).child(puid).child("garage").getValue(String.class));
+                    inputprice2.setText(dataSnapshot.child(uid).child(puid).child("garden").getValue(String.class));
+                    inputrooms2.setText(dataSnapshot.child(uid).child(puid).child("security").getValue(String.class));
+                    coordinate = dataSnapshot.child(uid).child(puid).child("coordinate").getValue(String.class);
+                    inputdues.setText(dataSnapshot.child(uid).child(puid).child("dues").getValue(String.class));
+                    filepath_count = dataSnapshot.child(uid).child(puid).child("filepath_count").getValue(String.class);
 
             }
 
@@ -104,50 +131,52 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
-            filePath = data.getData();
+            filePath.add(data.getData()) ;
 
         }
     }
     private void uploadImage(String uniq) {
 
-        if(filePath != null)
-        {
+        if(!filePath.isEmpty()) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ uniq);
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(EditProperty.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                            ParcelableProperty parcelableProperty = new ParcelableProperty(viewproperty);
-                            Intent mIntent = new Intent(EditProperty.this, ViewProperty.class);
+            for (int x = 0; x < filePath.size(); x++) {
+                StorageReference ref = storageReference.child("images/" + uniq + "/" + x);
+                for (i = 0; i < filePath.size(); i++) {
+                    ref.putFile(filePath.get(i))
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(EditProperty.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                    ParcelableProperty parcelableProperty = new ParcelableProperty(viewproperty);
+                                    Intent mIntent = new Intent(EditProperty.this, ViewProperty.class);
 
-                            mIntent.putExtra("property", parcelableProperty);
-                            startActivity(mIntent);
+                                    mIntent.putExtra("property", parcelableProperty);
+                                    startActivity(mIntent);
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(EditProperty.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(EditProperty.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                            .getTotalByteCount());
+                                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                                }
 
-                    });
-
+                            });
+                }
+            }
         }
     }
     private Property returnproperty(){
@@ -158,6 +187,32 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
         String address=inputaddress2.getText().toString();
         String description=inputdescription2.getText().toString();
         String area=inputarea2.getText().toString();
+        String dues=inputdues.getText().toString();
+        String garage;
+        String garden;
+        String security;
+        String pool;
+
+        if (garage_cb.isChecked()){
+            garage="1";
+        }else{
+            garage="0";
+        }
+        if (garden_cb.isChecked()){
+            garden="1";
+        }else{
+            garden="0";
+        }
+        if (pool_cb.isChecked()){
+            pool="1";
+        }else{
+            pool="0";
+        }
+        if (security_cb.isChecked()){
+            security="1";
+        }else{
+            security="0";
+        }
         uniqueproperty = propertydatabase.child("propertylist").child(user.getUid()).child(puid);
         uniqueproperty.child("title").setValue(title);
         uniqueproperty.child("price").setValue(price);
@@ -166,8 +221,15 @@ public class EditProperty extends AppCompatActivity implements View.OnClickListe
         uniqueproperty.child("description").setValue(description);
         uniqueproperty.child("area").setValue(area);
         uniqueproperty.child("uid").setValue(user.getUid());
-
-        viewproperty=new Property(title,price,rooms,address,description,area,uid,filePath.toString(),puid);
+        uniqueproperty.child("garden").setValue(garden);
+        uniqueproperty.child("garage").setValue(garage);
+        uniqueproperty.child("filepath_count").setValue(String.valueOf(filePath.size()));
+        for (i=0;i<filePath.size();i++){
+            uniqueproperty.child("imagefilepath"+i).setValue(filePath.get(i).toString()+i);
+        }
+        uniqueproperty.child("security").setValue(security);
+        uniqueproperty.child("pool").setValue(user.getUid());
+        uniqueproperty.child("dues").setValue(dues);
 
 
         uploadImage(puid);

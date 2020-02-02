@@ -11,4 +11,7 @@ public class UserDetails {
     static String mail = "";
     static String uid = "";
 
+
+
+
 }

@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.regex.Pattern;
 
 public class Property_search extends AppCompatActivity  {
     RecyclerView recylerProp;
@@ -44,13 +45,16 @@ public class Property_search extends AppCompatActivity  {
     private DatabaseReference mDatabase;
     private DatabaseReference propertyref;
     private String uid;
-    Spinner search_options;
-    EditText input_search;
-    EditText min;
-    EditText max;
-    Button search_prop;
-    LinearLayout price_layout;
+    private Spinner search_options;
+    private EditText input_search;
+    private EditText min;
+    private EditText max;
+    private Button search_prop;
+    private LinearLayout price_layout;
     int i=0;
+    String text;
+    String regex;
+    boolean matches;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,7 @@ public class Property_search extends AppCompatActivity  {
         List<String> categories = new ArrayList<String>();
         categories.add("Rooms");
         categories.add("Price");
-        categories.add("Area");
+        categories.add("Size");
         categories.add("Address");
         categories.add("Description");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -121,11 +125,16 @@ public class Property_search extends AppCompatActivity  {
                                                         Toast.makeText(Property_search.this, "Min price value can't be greater than or equal to max price value.",
                                                                 Toast.LENGTH_SHORT).show();
                                                     }else{
-                                                    for (int x=0;x<properties.size();x++){
-                                                        if(Integer.parseInt(properties.get(x).getPrice())<=Integer.parseInt(max.getText().toString())&&Integer.parseInt(properties.get(x).getPrice())>=Integer.parseInt(min.getText().toString())){
-                                                        propertyuid.add(properties.get(x));
-                                                    }
+                                                    try {
+                                                        for (int x=0;x<properties.size();x++){
+                                                            if(Integer.parseInt(properties.get(x).getPrice())<=Integer.parseInt(max.getText().toString())&&Integer.parseInt(properties.get(x).getPrice())>=Integer.parseInt(min.getText().toString())){
+                                                                propertyuid.add(properties.get(x));
+                                                            }
 
+                                                        }
+                                                    }catch (Exception e){
+                                                        Toast.makeText(Property_search.this, "Firebase connection is lost.",
+                                                                Toast.LENGTH_SHORT).show();
                                                     }
                                                       if(propertyuid.isEmpty()){
                                                             Toast.makeText(Property_search.this, "There are no results.",
@@ -146,7 +155,11 @@ public class Property_search extends AppCompatActivity  {
                                                 {
                                                     propertyuid.clear();
                                                     for (int x=0;x<properties.size();x++){
-                                                    if(properties.get(x).getRooms().equals(input_search.getText().toString())){
+                                                      text=properties.get(x).getRooms();
+                                                        regex=input_search.getText().toString();
+                                                       regex += "[+]\\d*";
+                                                      matches = Pattern.matches(regex, text);
+                                                    if(matches){
                                                         propertyuid.add(properties.get(x));
                                                     }
                                                    }   if(propertyuid.isEmpty()){
@@ -168,7 +181,11 @@ public class Property_search extends AppCompatActivity  {
                                                 {
                                                     propertyuid.clear();
                                                     for (int x=0;x<properties.size();x++){
-                                                    if(properties.get(x).getarea().equals(input_search.getText().toString())){
+                                                        text=properties.get(x).getarea();
+                                                        regex=input_search.getText().toString();
+                                                        regex += "\\d*";
+                                                        matches = Pattern.matches(regex, text);
+                                                    if(matches){
                                                         propertyuid.add(properties.get(x));
 
                                                     }
@@ -191,7 +208,11 @@ public class Property_search extends AppCompatActivity  {
                                                 {
                                                     propertyuid.clear();
                                                     for (int x=0;x<properties.size();x++){
-                                                    if(properties.get(x).getAddress().contains(input_search.getText().toString())){
+                                                        text=properties.get(x).getAddress();
+                                                        regex=input_search.getText().toString();
+                                                        regex+= "\\w*";
+                                                        matches = Pattern.matches(regex, text);
+                                                    if(matches){
                                                         propertyuid.add(properties.get(x));
 
                                                     }
@@ -214,7 +235,11 @@ public class Property_search extends AppCompatActivity  {
                                                 {
                                                     propertyuid.clear();
                                                     for (int x=0;x<properties.size();x++){
-                                                    if(properties.get(x).getDescription().contains(input_search.getText().toString())){
+                                                        text=properties.get(x).getDescription();
+                                                        regex=input_search.getText().toString();
+                                                        regex += "\\w*";
+                                                        matches = Pattern.matches(regex, text);
+                                                    if(matches){
                                                         propertyuid.add(properties.get(x));
 
                                                     }

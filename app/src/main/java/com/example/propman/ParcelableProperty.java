@@ -27,7 +27,15 @@ public class ParcelableProperty implements Parcelable {
         property.setAddress(parcel.readString());
         property.setImagefilepath(parcel.readString());
         property.setUniquepropertyid(parcel.readString());
+        property.setCoordinate(parcel.readString());
+        property.setGarage(parcel.readString());
+        property.setGarden(parcel.readString());
+        property.setSecurity(parcel.readString());
+        property.setPool(parcel.readString());
 
+        property.setDues(parcel.readString());
+        property.setFilepath_count(parcel.readString());
+        property.setTime(parcel.readString());
     }
 
 
@@ -53,8 +61,14 @@ public class ParcelableProperty implements Parcelable {
         parcel.writeString(property.getAddress());
         parcel.writeString(property.getImagefilepath());
         parcel.writeString(property.getUniquepropertyid());
-
-
+        parcel.writeString(property.getCoordinate());
+        parcel.writeString(property.getGarage());
+        parcel.writeString(property.getGarden());
+        parcel.writeString(property.getSecurity());
+        parcel.writeString(property.getPool());
+        parcel.writeString(property.getDues());
+        parcel.writeString(property.getFilepath_count());
+        parcel.writeString(property.getTime());
 
     }
 

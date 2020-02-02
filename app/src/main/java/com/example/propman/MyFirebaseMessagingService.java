@@ -44,8 +44,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }else if(type.equalsIgnoreCase("RENT")){
             intent = new Intent(this, DisplayProperties.class);
             intent.putExtra("uid", uid);
-        }
-        else{
+        }else if(type.equalsIgnoreCase("R-accepted")){
+            intent = new Intent(this, Pos.class); //PS
+        }else if(type.equalsIgnoreCase("R-denied")){
+            intent = new Intent(this, Edit_profile.class);
+        }else if(type.equalsIgnoreCase("REQUEST")) {
+            intent = new Intent(this,Edit_profile.class);
+        }else{
              intent = new Intent(this, Edit_profile.class);
         }
 

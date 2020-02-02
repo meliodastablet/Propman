@@ -48,8 +48,16 @@ public class Propertydatabase extends AppCompatActivity {
                     String rooms = ds.child("rooms").getValue(String.class);
                     String title = ds.child("title").getValue(String.class);
                     String filePath = ds.child("imagefilepath").getValue(String.class);
+                    String coordinate = ds.child("coordinate").getValue(String.class);
                     String uniquepropertyid = ds.child("uniquepropertyid").getValue(String.class);
-                    Property property=new Property(title,price,rooms,area,desc,address,uid,filePath,uniquepropertyid);
+                    String garage = ds.child("garage").getValue(String.class);
+                    String garden = ds.child("garden").getValue(String.class);
+                    String security = ds.child("security").getValue(String.class);
+                    String pool = ds.child("pool").getValue(String.class);
+                    String dues = ds.child("dues").getValue(String.class);
+                    String filepath_count = ds.child("filepath_count").getValue(String.class);
+                    String time = ds.child("time").getValue(String.class);
+                    Property property=new Property(title,price,rooms,area,desc,address,uid,filePath,uniquepropertyid,coordinate,garage,garden,security,pool,dues,filepath_count,time);
                     ArrayList<Property> propertylist=new ArrayList<>();
                     propertylist.add(property);
                 }
