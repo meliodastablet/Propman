@@ -1,0 +1,143 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lineer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_location"
+            android:layout_width="214dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/button1"
+            android:fontFamily="@font/sans_semibold"
+            android:paddingBottom="2px"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/btn_Go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:text="Go"
+            android:textColor="@color/colorAc" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/minmax_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_below="@+id/lineer"
+        android:layout_alignParentTop="false"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5pt"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/min_price"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:layout_marginBottom="2pt"
+            android:background="@drawable/button1"
+            android:ems="10"
+            android:fontFamily="@font/sans_semibold"
+            android:hint="MIN PRICE"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <EditText
+            android:id="@+id/max_price"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:layout_marginBottom="2pt"
+            android:background="@drawable/button1"
+            android:ems="10"
+            android:fontFamily="@font/sans_semibold"
+            android:hint="MAX PRICE"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="220px">
+
+        <EditText
+            android:id="@+id/filter_search"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginTop="2pt"
+            android:layout_marginRight="2pt"
+            android:layout_marginBottom="2pt"
+            android:background="@drawable/button1"
+            android:ems="10"
+            android:fontFamily="@font/sans_semibold"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary" />
+
+        <Spinner
+            android:id="@+id/filter_options"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginTop="2pt"
+            android:layout_marginRight="2pt"
+            android:layout_weight="1"
+            android:ems="10" />
+    </LinearLayout>
+
+    <Button
+        android:text="Uydu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorAc"
+        android:id="@+id/btn_Sat" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.hasibezafer.googlemapsapp.MapsActivity"
+        android:layout_below="@+id/filter_layout"/>
+
+    <ZoomControls
+        android:id="@+id/zoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"></ZoomControls>
+
+</RelativeLayout>
+
+

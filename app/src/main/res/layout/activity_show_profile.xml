@@ -37,19 +37,20 @@
 
         <TextView
             android:id="@+id/labelname"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginLeft="2pt"
             android:layout_marginRight="2pt"
             android:fontFamily="@font/sans_bold"
+            android:paddingTop="3pt"
             android:text="Name:"
             android:textColor="@color/colorPrimary"
-            android:textSize="50px" />
+            android:textSize="45px" />
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="260dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginLeft="2pt"
@@ -58,7 +59,7 @@
             android:layout_marginBottom="10px"
             android:fontFamily="@font/sans_semibold"
             android:textColor="#030303"
-            android:textSize="20dp" />
+            android:textSize="45px" />
 
     </LinearLayout>
     <LinearLayout
@@ -70,28 +71,29 @@
         android:orientation="horizontal">
 
         <TextView
-        android:id="@+id/labelsurname"
-        android:layout_width="80dp"
-        android:layout_height="35dp"
-        android:layout_gravity="right"
-        android:layout_marginLeft="2pt"
-        android:layout_marginRight="2pt"
-        android:fontFamily="@font/sans_bold"
-        android:text="Surame:"
-        android:textColor="@color/colorPrimary"
-        android:textSize="50px" />
+            android:id="@+id/labelsurname"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:paddingTop="3pt"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:fontFamily="@font/sans_bold"
+            android:text="Surname:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="45px" />
 
         <TextView
             android:id="@+id/surname"
-            android:layout_width="260dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10px"
             android:layout_marginBottom="10px"
             android:fontFamily="@font/sans_semibold"
             android:textColor="#030303"
-            android:textSize="20dp" />
-</LinearLayout>
+            android:textSize="45px" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="370dp"
@@ -103,26 +105,26 @@
 
         <TextView
             android:id="@+id/labelphone"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
             android:layout_gravity="right"
             android:layout_marginLeft="2pt"
             android:layout_marginRight="2pt"
-            android:fontFamily="@font/sans_bold"
+            android:fontFamily="@font/sans_semibold"
             android:text="Phone Number:"
             android:textColor="@color/colorPrimary"
-            android:textSize="50px" />
+            android:textSize="45px" />
 
         <TextView
             android:id="@+id/phone"
-            android:layout_width="260dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10px"
             android:layout_marginBottom="10px"
             android:fontFamily="@font/sans_bold"
             android:textColor="#030303"
-            android:textSize="20dp" />
+            android:textSize="45px" />
     </LinearLayout>
 
     <LinearLayout
@@ -132,28 +134,30 @@
         android:layout_marginTop="15px"
         android:layout_marginBottom="15px"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/labelmail"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginLeft="2pt"
             android:layout_marginRight="2pt"
             android:fontFamily="@font/sans_bold"
+            android:paddingTop="3pt"
             android:text="E-mail:"
-            android:textColor="@dra"
-            android:textSize="50px"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="45px" />
 
         <TextView
             android:id="@+id/mail"
-            android:layout_width="260dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10px"
             android:layout_marginBottom="10px"
             android:fontFamily="@font/sans_semibold"
             android:textColor="#030303"
-            android:textSize="20dp" />
+            android:textSize="45px" />
 
     </LinearLayout>
 
@@ -164,40 +168,31 @@
         android:layout_marginTop="15px"
         android:layout_marginBottom="15px"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/labeladdress"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginLeft="2pt"
             android:layout_marginRight="2pt"
             android:fontFamily="@font/sans_bold"
+            android:paddingTop="3pt"
             android:text="Address:"
             android:textColor="@color/colorPrimary"
-            android:textSize="50px"/>
+            android:textSize="45px" />
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="290dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:textColor="#FF323E48"
-        android:textSize="20dp"
-        android:layout_marginTop="10px"
-        android:layout_marginBottom="10px"
-        android:fontFamily="@font/sans_bold"/>
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:textColor="#030303"
+            android:textSize="45px"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:fontFamily="@font/sans_semibold"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/bdate"
-        android:layout_width="370dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:layout_marginTop="10px"
-        android:layout_marginBottom="10px"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -207,30 +202,30 @@
         android:orientation="vertical"
         android:layout_marginBottom="10px"
         android:layout_marginTop="10px">
-    <Button
-        android:id="@+id/sendmessage"
-        android:layout_width="140dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10px"
-        android:layout_marginBottom="10px"
-        android:background="@color/colorAccent"
-        android:fontFamily="@font/sans_bold"
-        android:text="Send Message"
-        android:textColor="@color/colorAc"
-        />
+        <Button
+            android:id="@+id/sendmessage"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:text="Send Message"
+            android:textColor="@color/colorAc"
+            />
 
-    <Button
-        android:id="@+id/showprop2"
-        android:layout_width="140dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10px"
-        android:layout_marginBottom="10px"
-        android:background="@color/colorAccent"
-        android:fontFamily="@font/sans_bold"
-        android:text="Show All Properties"
-        android:textColor="@color/colorAc" />
+        <Button
+            android:id="@+id/showprop2"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:text="Show All Properties"
+            android:textColor="@color/colorAc" />
     </LinearLayout>
     <Button
         android:id="@+id/signout"

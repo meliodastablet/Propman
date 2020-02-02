@@ -98,6 +98,18 @@
         android:inputType="textPostalAddress"
         android:layout_marginBottom="10pt"/>
 
+    <Button
+        android:id="@+id/save"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:text="Save"
+        android:textColor="@color/colorAc" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,36 +119,6 @@
         android:layout_marginBottom="15px"
         android:layout_marginTop="15px">
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="140dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="2pt"
-        android:layout_marginRight="2pt"
-        android:background="@color/colorAccent"
-        android:fontFamily="@font/sans_bold"
-        android:text="Save"
-        android:textColor="@color/colorAc" />
-    <Button
-        android:id="@+id/addproperty"
-        android:layout_width="140dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:background="@color/colorAccent"
-        android:fontFamily="@font/sans_bold"
-        android:layout_marginLeft="2pt"
-        android:layout_marginRight="2pt"
-        android:text="Add Property"
-        android:textColor="@color/colorAc" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15px"
-        android:layout_marginTop="15px">
 
         <Button
             android:id="@+id/showprop"
@@ -149,8 +131,30 @@
             android:fontFamily="@font/sans_bold"
             android:gravity="center"
             android:onClick="onClick"
-            android:text="Show All Propertıes"
+            android:text="Show My Propertıes"
             android:textColor="@color/colorAc" />
+        <Button
+            android:id="@+id/addproperty"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/sans_bold"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:text="Add Property"
+            android:textColor="@color/colorAc" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15px"
+        android:layout_marginTop="15px">
+
+
 
         <Button
             android:id="@+id/searchprop"
@@ -163,7 +167,61 @@
             android:layout_marginRight="2pt"
             android:text="Search Propertıes"
             android:textColor="@color/colorAc" />
+
+        <Button
+            android:id="@+id/search_on_map"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Search Properties On Map"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorAc"
+            android:fontFamily="@font/sans_bold"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15px"
+        android:layout_marginTop="15px">
+
+        <Button
+            android:id="@+id/show_calendar"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorAc"
+            android:fontFamily="@font/sans_bold"
+            android:text="Calendar" />
+
+        <Button
+            android:id="@+id/payb"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorAc"
+            android:fontFamily="@font/sans_bold"
+            android:text="Payment History" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15px"
+        android:layout_marginTop="15px">
     <Button
         android:id="@+id/verifyEmail"
         android:layout_width="140dp"
@@ -171,16 +229,19 @@
         android:text="Verify E-mail"
         android:background="@drawable/button2"
         android:fontFamily="@font/sans_bold"
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
         android:textColor="@color/colorAccent"
         tools:visibility="gone"
-        android:layout_marginBottom="15px"
-        android:layout_marginTop="15px"
         android:layout_gravity="center"
         />
+
     <Button
         android:id="@+id/signout"
         android:layout_width="140dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
         android:layout_gravity="center"
         android:layout_marginTop="15px"
         android:layout_marginBottom="15px"
@@ -188,5 +249,6 @@
         android:fontFamily="@font/sans_bold"
         android:text="SIGN OUT"
         android:textColor="#FF8F8C8C" />
+    </LinearLayout>
 
 </LinearLayout>

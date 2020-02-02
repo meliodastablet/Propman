@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bckg"
     android:orientation="vertical"
-    tools:context=".AddProperty"
-    android:background="@drawable/bckg">
+    tools:context=".AddProperty">
 
     <ImageView
         android:layout_width="260dp"
@@ -14,115 +17,205 @@
         android:layout_gravity="center"
         android:layout_margin="00dp"
         android:background="@drawable/prp" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Add Property"
         android:layout_marginBottom="50px"
-        android:textSize="75px"
-        android:textColor="#FF323E48"
         android:fontFamily="@font/sans_semibold"
-        />
+        android:text="Add Property"
+        android:textColor="#FF323E48"
+        android:textSize="75px" />
 
-      <EditText
+    <EditText
         android:id="@+id/propertytitle"
         android:layout_width="180dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-          android:paddingBottom="3px"
         android:layout_marginBottom="50px"
         android:background="@drawable/button1"
         android:ems="10"
         android:fontFamily="@font/sans_bold"
         android:hint="Title"
         android:inputType="textPersonName"
+        android:paddingBottom="3px"
         android:textColor="#FF323E48" />
 
     <EditText
         android:id="@+id/price"
         android:layout_width="180dp"
-        android:paddingBottom="3px"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="50px"
         android:background="@drawable/button1"
         android:ems="10"
+        android:fontFamily="@font/sans_bold"
         android:hint="Price"
         android:inputType="number"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"
-        />
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
     <EditText
         android:id="@+id/rooms"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:paddingBottom="3px"
         android:layout_gravity="center"
         android:layout_marginBottom="50px"
         android:background="@drawable/button1"
         android:ems="10"
+        android:fontFamily="@font/sans_bold"
         android:hint="Rooms(2 + 1)"
         android:inputType="textPersonName"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"/>
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
     <EditText
         android:id="@+id/area"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:paddingBottom="3px"
         android:layout_gravity="center"
         android:layout_marginBottom="50px"
         android:background="@drawable/button1"
         android:ems="10"
+        android:fontFamily="@font/sans_bold"
         android:hint="Area (m2)"
         android:inputType="number"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"/>
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
     <EditText
         android:id="@+id/address"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:paddingBottom="3px"
         android:layout_gravity="center"
         android:layout_marginBottom="50px"
         android:background="@drawable/button1"
         android:ems="10"
+        android:fontFamily="@font/sans_bold"
         android:hint="Address"
         android:inputType="textPersonName"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"/>
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:paddingBottom="3px"
         android:layout_gravity="center"
         android:layout_marginBottom="50px"
-        android:ems="10"
-        android:hint="Description"
         android:background="@drawable/button1"
+        android:ems="10"
+        android:fontFamily="@font/sans_bold"
+        android:hint="Description"
         android:inputType="textPersonName"
-        android:textColor="#FF323E48"
-        android:fontFamily="@font/sans_bold"/>
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
+    <EditText
+        android:id="@+id/dues"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50px"
+        android:background="@drawable/button1"
+        android:ems="10"
+        android:fontFamily="@font/sans_bold"
+        android:hint="Aprtment Dues:"
+        android:inputType="number"
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/input_garage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/sans_semibold"
+            android:text="Garage"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/garage_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:checked="false" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/input_garden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/sans_semibold"
+            android:text="Garden"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/garden_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp" />
+    </LinearLayout> <LinearLayout
+    android:layout_width="180dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/input_pool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/sans_semibold"
+        android:text="Pool"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/pool_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp" />
+</LinearLayout> <LinearLayout
+    android:layout_width="180dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/input_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/sans_semibold"
+        android:text="Security Guard"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:id="@+id/security_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp" />
+</LinearLayout>
     <Button
         android:id="@+id/addimage"
         android:layout_width="140dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="ADD IMAGE"
+        android:layout_marginBottom="2.5pt"
         android:background="@color/colorAccent"
         android:fontFamily="@font/sans_bold"
-        android:textColor="@color/colorAc"
-        android:layout_marginBottom="2.5pt"
-        />
+        android:gravity="center"
+        android:text="ADD IMAGE"
+        android:textColor="@color/colorAc" />
 
     <Button
         android:id="@+id/addproperty"
@@ -130,10 +223,10 @@
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginBottom="0px"
-        android:text="ADD PROPERTY"
         android:background="@color/colorAccent"
         android:fontFamily="@font/sans_bold"
-        android:textColor="@color/colorAc"/>
-
+        android:text="ADD PROPERTY"
+        android:textColor="@color/colorAc" />
 
 </LinearLayout>
+</ScrollView>

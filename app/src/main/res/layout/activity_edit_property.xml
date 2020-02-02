@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -108,7 +112,100 @@
         android:inputType="textPersonName"
         android:textColor="#FF323E48"
         android:fontFamily="@font/sans_bold"/>
+    <EditText
+        android:id="@+id/dues"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50px"
+        android:background="@drawable/button1"
+        android:ems="10"
+        android:fontFamily="@font/sans_bold"
+        android:hint="Aprtment Dues:"
+        android:inputType="number"
+        android:paddingBottom="3px"
+        android:textColor="#FF323E48" />
 
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/input_garage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Garage"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/sans_semibold"
+            />
+
+        <CheckBox
+            android:id="@+id/garage_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:checked="false" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/input_garden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Garden"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/sans_semibold"
+            />
+
+        <CheckBox
+            android:id="@+id/garden_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp" />
+    </LinearLayout> <LinearLayout
+    android:layout_width="180dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/input_pool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pool"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/sans_semibold"
+         />
+
+    <CheckBox
+        android:id="@+id/pool_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp" />
+</LinearLayout> <LinearLayout
+    android:layout_width="180dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="50px">
+
+    <TextView
+        android:id="@+id/input_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/sans_semibold"
+        android:text="Security Guard"
+        />
+
+    <CheckBox
+        android:id="@+id/security_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp" />
+</LinearLayout>
     <Button
         android:id="@+id/addimage2"
         android:layout_width="140dp"
@@ -133,3 +230,4 @@
         android:textColor="@color/colorAc"/>
 
 </LinearLayout>
+</ScrollView>

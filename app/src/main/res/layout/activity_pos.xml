@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Pos"
+    android:background="@drawable/bckg">
+
+    <ImageView
+        android:layout_width="260dp"
+        android:layout_height="74dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="3pt"
+        android:background="@drawable/prp" />
+
+    <EditText
+        android:id="@+id/cardnum"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:paddingBottom="3px"
+        android:background="@drawable/button1"
+        android:ems="10"
+        android:hint="Credit Card Number"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/cvc"
+        android:ems="10"
+        android:hint="CVC"
+        android:inputType="number"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:paddingBottom="3px"
+        android:background="@drawable/button1"/>
+
+    <EditText
+        android:id="@+id/date"
+        android:ems="10"
+        android:hint="Expiration Date"
+        android:inputType="text"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:paddingBottom="3px"
+        android:background="@drawable/button1"
+        android:layout_marginBottom="3pt"/>
+
+    <Button
+        android:id="@+id/pay"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="2pt"
+        android:layout_marginRight="2pt"
+        android:background="@color/colorAccent"
+        android:fontFamily="@font/sans_bold"
+        android:textColor="@color/colorAc"
+        android:text="FINISH Payment" />
+
+</LinearLayout>
